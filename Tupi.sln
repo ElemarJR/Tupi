@@ -3,9 +3,35 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7B36C062-8EF8-4ED1-9738-B8D2207ACFD9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{2A180B09-128A-4A39-9819-D4DF5DF49520}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tupi", "src\Tupi\Tupi.csproj", "{5776E6DF-41A9-4A9A-AA56-0295F7722201}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tupi.Tests", "test\Tupi.Tests\Tupi.Tests.csproj", "{191A65AF-E096-4169-99DC-C90388F8DAAC}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5776E6DF-41A9-4A9A-AA56-0295F7722201}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5776E6DF-41A9-4A9A-AA56-0295F7722201}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5776E6DF-41A9-4A9A-AA56-0295F7722201}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5776E6DF-41A9-4A9A-AA56-0295F7722201}.Release|Any CPU.Build.0 = Release|Any CPU
+		{191A65AF-E096-4169-99DC-C90388F8DAAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{191A65AF-E096-4169-99DC-C90388F8DAAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{191A65AF-E096-4169-99DC-C90388F8DAAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{191A65AF-E096-4169-99DC-C90388F8DAAC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5776E6DF-41A9-4A9A-AA56-0295F7722201} = {7B36C062-8EF8-4ED1-9738-B8D2207ACFD9}
+		{191A65AF-E096-4169-99DC-C90388F8DAAC} = {2A180B09-128A-4A39-9819-D4DF5DF49520}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {49D14A68-7FD7-447B-965A-AAE66D485153}
