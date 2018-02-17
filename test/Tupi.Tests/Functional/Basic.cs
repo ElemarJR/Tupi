@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 using Tupi.Indexing;
+using Tupi.Querying;
 using Xunit;
 
 namespace Tupi.Tests.Functional
@@ -20,14 +21,25 @@ namespace Tupi.Tests.Functional
             "elemar",
             new[] {0, 2, 3}
         )]
+        [InlineData(
+            new[]
+            {
+                "Elemar is learning how to create an inverted index",
+                "It is cool to use csharp.",
+            },
+            "visual",
+            new int[]{}
+        )]
+
         public void SearchBySingleTerm(
             string[] documents,
             string term,
             int[] expectedResults
         )
         {
-            var index = StringIndexer.CreateIndex(documents);
-            var results = index.Search(term);
+            var index = new StringIndexer().CreateIndex(documents);
+            var searcher = new Searcher(index);
+            var results = searcher.Search(term);
             Assert.Equal(expectedResults, results);
         }
 
@@ -57,8 +69,9 @@ namespace Tupi.Tests.Functional
                     .ToArray();
             }
 
-            var index = StringIndexer.CreateIndex(documents);
-            var results = index.Search(terms);
+            var index = new StringIndexer().CreateIndex(documents);
+            var searcher = new Searcher(index);
+            var results = searcher.Search(terms);
             Assert.Equal(expectedResults, results);
         }
     }

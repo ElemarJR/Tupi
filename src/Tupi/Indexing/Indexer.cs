@@ -7,7 +7,14 @@ namespace Tupi.Indexing
 {
     public class StringIndexer
     {
-        public static InvertedIndex CreateIndex(
+        private readonly IAnalyzer _analyzer;
+
+        public StringIndexer(IAnalyzer analyzer = null)
+        {
+            _analyzer = analyzer ?? DefaultAnalyzer.Instance;
+        }
+
+        public InvertedIndex CreateIndex(
             params string[] documents
         )
         {
@@ -20,7 +27,7 @@ namespace Tupi.Indexing
                     var tokenSource = new TokenSource(reader);
 
                     var tokens = tokenSource
-                        .ReadAll(DefaultAnalyzer.Instance.Process)
+                        .ReadAll(_analyzer.Process)
                         .Distinct()
                         .ToArray();
 
