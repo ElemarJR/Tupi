@@ -8,7 +8,8 @@ namespace Tupi.Indexing
         private readonly IFilter[] _filters =
         {
             new ToLowerFilter(), 
-            new StopWordsFilter()
+            new StopWordsFilter(),
+            new PorterStemmerFilter()
         };
 
         public bool Process(TokenSource source)

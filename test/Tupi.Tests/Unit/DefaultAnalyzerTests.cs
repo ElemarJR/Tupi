@@ -10,7 +10,7 @@ namespace Tupi.Tests.Unit
         [Theory]
         [InlineData(
             "This is a simple string.",
-            new[] { "simple", "string" }
+            new[] { "simpl", "str" }
         )]
         public void TokenizationWorks(string input, string[] expected)
         {
