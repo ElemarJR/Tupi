@@ -14,6 +14,11 @@ namespace Tupi.Querying.Queries
             _queries = queries;
         }
 
+        public AllQuery(params Query[] queries)
+        {
+            _queries = queries;
+        }
+
         public override IEnumerable<int> Execute(InvertedIndex index)
         {
             var postings = new List<List<int>>();

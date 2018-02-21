@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using Tupi.Indexing;
 
 namespace Tupi.Querying.Queries
@@ -16,6 +18,22 @@ namespace Tupi.Querying.Queries
             => index.GetPostingsFor(_term);
 
         public static Query From(string term) =>
-            new TermQuery(term);
+            From(term, DefaultAnalyzer.Instance);
+
+        public static Query From(string term, IAnalyzer analyzer)
+        {
+            using (var reader = new StringReader(term))
+            {
+                var tokenSource = new TokenSource(reader);
+                tokenSource.Next();
+
+                if (!analyzer.Process(tokenSource))
+                {
+                    throw new InvalidOperationException($"Could not generate a term from: {term}");
+                }
+
+                return new TermQuery(tokenSource.ToString());
+            }
+        }
     }
 }
