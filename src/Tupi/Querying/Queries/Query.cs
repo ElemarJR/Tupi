@@ -25,5 +25,7 @@ namespace Tupi.Querying.Queries
         public static Query Or(Query left, Query right) =>
             new AnyQuery(left, right);
 
+        public static Query Not(Query innerQuery) 
+            => new NotQuery(innerQuery);
     }
 }
