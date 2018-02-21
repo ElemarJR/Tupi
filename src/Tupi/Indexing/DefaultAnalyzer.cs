@@ -9,6 +9,7 @@ namespace Tupi.Indexing
         {
             new ToLowerFilter(), 
             new StopWordsFilter(),
+            new RemovePossesiveSufixFilter(), 
             new PorterStemmerFilter()
         };
 

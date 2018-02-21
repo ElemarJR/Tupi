@@ -74,5 +74,28 @@ namespace Tupi.Tests.Functional
             var results = searcher.Search(terms);
             Assert.Equal(expectedResults, results);
         }
+
+        [Theory]
+        [InlineData(
+            new[]
+            {
+                "Human cannibalism is the act or practice of humans eating the flesh or internal organs of other human beings. ",
+                "There are cannibals in some primitive communities.",
+                "In marketing strategy, cannibalization refers to a reduction in sales volume, sales revenue,... ",
+            },
+            "Cannibalization",
+            new[] { 0, 1, 2 }
+        )]
+        public void SearchByQuery_TestingPorterStemming(
+            string[] documents,
+            string query,
+            int[] expectedResults
+        )
+        {
+            var index = new StringIndexer().CreateIndex(documents);
+            var searcher = new Searcher(index);
+            var results = searcher.Search(query, DefaultAnalyzer.Instance);
+            Assert.Equal(expectedResults, results);
+        }
     }
 }

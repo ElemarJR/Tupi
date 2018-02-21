@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Tupi.Indexing;
 
@@ -13,6 +14,16 @@ namespace Tupi.Querying
             _index = index;
         }
 
+        public IEnumerable<int> Search(string query, IAnalyzer analyzer)
+        {
+            using (var reader = new StringReader(query))
+            {
+                var terms = new TokenSource(reader)
+                    .ReadAll(DefaultAnalyzer.Instance.Process)
+                    .ToArray();
+                return Search(terms);
+            }
+        }
 
         public IEnumerable<int> Search(params string[] terms)
         {
