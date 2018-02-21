@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using Tupi.Indexing;
+using Tupi.Querying.Queries;
 
 namespace Tupi.Querying
 {
@@ -25,39 +26,10 @@ namespace Tupi.Querying
             }
         }
 
-        public IEnumerable<int> Search(params string[] terms)
-        {
-            // no terms
-            if (terms.Length == 0)
-            {
-                return Enumerable.Empty<int>();
-            }
+        public IEnumerable<int> Search(params string[] terms) => 
+            Search(AllQuery.From(terms));
 
-            var postings = new List<List<int>>();
-            for (var i = 0; i < terms.Length; i++)
-            {
-                // there is a term with no results
-                var l = _index.GetPostingsFor(terms[i]).ToList();
-
-                if (!l.Any())
-                {
-                    return l;
-                }
-
-                postings.Add(l);
-            }
-
-            // 
-            postings.Sort((l1, l2) => l1.Count.CompareTo(l2.Count));
-
-            var results = postings[0];
-
-            for (var i = 1; i < postings.Count; i++)
-            {
-                results = results.Intersect(postings[1]).ToList();
-            }
-
-            return results;
-        }
+        public IEnumerable<int> Search(Query query) 
+            => query.Execute(_index);
     }
 }
