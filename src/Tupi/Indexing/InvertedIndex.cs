@@ -9,28 +9,53 @@ namespace Tupi.Indexing
             new SortedSet<int>();
         public IEnumerable<int> IndexedDocuments => _indexedDocuments;
 
-        private readonly IDictionary<string, List<int>> _data = 
-            new Dictionary<string, List<int>>();
+        private readonly IDictionary<string, List<Posting>> _data = 
+            new Dictionary<string, List<Posting>>();
 
-        internal void Append(string term, int documentId)
+        internal void Append(string term, int documentId, long position)
         {
             if (_data.ContainsKey(term))
             {
-                _data[term].Add(documentId);
+                var posting =
+                    _data[term].FirstOrDefault(p => p.DocumentId == documentId);
+
+                if (posting == null)
+                {
+                    posting = new Posting(documentId);
+                    _data[term].Add(posting);
+                }
+            
+                posting.Positions.Add(position);
             }
             else
             {
-                var postings = new List<int> {documentId};
+                var posting = new Posting(documentId);
+                posting.Positions.Add(position);
+                var postings = new List<Posting> {posting};
                 _data.Add(term, postings);
             }
 
             _indexedDocuments.Add(documentId);
         }
 
-        public IEnumerable<int> GetPostingsFor(string term) => !_data.ContainsKey(term) 
-            ? Enumerable.Empty<int>() 
+        public IEnumerable<Posting> GetPostingsFor(string term) => !_data.ContainsKey(term) 
+            ? Enumerable.Empty<Posting>() 
             : _data[term];
+    }
 
-        
+    public class Posting
+    {
+        public int DocumentId { get; }
+        public IList<long> Positions { get; } = new List<long>(); 
+
+        public Posting(int documentId)
+        {
+            DocumentId = documentId;
+        }
+
+        public static implicit operator int(Posting entry) => 
+            entry.DocumentId;
+
+       
     }
 }

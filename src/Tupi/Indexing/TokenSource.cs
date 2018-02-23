@@ -15,6 +15,7 @@ namespace Tupi.Indexing
 
         public char[] Buffer { get; } = new char[256];
         public int Size { get; set; }
+        public long Position { get; private set; }
 
         public bool Next()
         {
@@ -28,6 +29,7 @@ namespace Tupi.Indexing
                 {
                     if (Size > 0)
                     {
+                        Position++;
                         return true;
                     }
                 }
@@ -37,6 +39,7 @@ namespace Tupi.Indexing
                 }
             }
 
+            Position++;
             return Size > 0;
         }
 

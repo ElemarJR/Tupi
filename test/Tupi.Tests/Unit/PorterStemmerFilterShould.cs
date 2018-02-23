@@ -51,7 +51,7 @@ namespace Tupi.Tests.Unit
 
         [Theory]
         [InlineData("international", "internate")]
-        [InlineData("rational", "rational")]
+        [InlineData("rational", "ration")]
         [InlineData("constitutional", "constitution")]
         [InlineData("energizer", "energize")]
         [InlineData("internacionalization", "internacionalize")]
@@ -74,7 +74,7 @@ namespace Tupi.Tests.Unit
         }
 
         [Theory]
-        [InlineData("intrincate", "intrinc")]
+        [InlineData("intrinc", "intrinc")]
         [InlineData("denunciative", "denunci")]
         [InlineData("cannibalize", "cannibal")]
         [InlineData("madness", "mad")]
