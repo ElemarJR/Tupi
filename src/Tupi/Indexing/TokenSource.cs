@@ -25,7 +25,7 @@ namespace Tupi.Indexing
             {
                 var ch = (char)r;
 
-                if (ch == '\r' || ch == '\n' || char.IsWhiteSpace(ch) || char.IsPunctuation(ch))
+                if (ch == '\r' || ch == '\n' || char.IsWhiteSpace(ch) || (char.IsPunctuation(ch) && ch != '\''))
                 {
                     if (Size > 0)
                     {

@@ -88,7 +88,7 @@ namespace Tupi.Tests.Functional
         }
 
         [Fact]
-        void Distance()
+        void PhraseQuery1()
         {
             var documents = new[]
             {
@@ -110,6 +110,29 @@ namespace Tupi.Tests.Functional
             var results = seacher.Search(query);
 
             Assert.Equal(new[] { 0, 3 }, results.OrderBy(m => m));
+        }
+
+        [Fact]
+        void PhraseQuery2()
+        {
+            var documents = new[]
+            {
+                "The Inventor Stanford Ovshinsky never went to university",
+                "The Stanford University is in the heart of Northern California's dynamic Silicon Valley"
+            };
+
+            var index = new StringIndexer().CreateIndex(documents);
+            var seacher = new Searcher(index);
+
+            var query = Query.Distance(
+                DefaultAnalyzer.Instance.AnalyzeOnlyTheFirstToken("Stanford"),
+                DefaultAnalyzer.Instance.AnalyzeOnlyTheFirstToken("University"),
+                1
+            );
+
+            var results = seacher.Search(query);
+
+            Assert.Equal(new[] { 1 }, results);
         }
     }
 }
