@@ -7,11 +7,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7B36C062-8EF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{2A180B09-128A-4A39-9819-D4DF5DF49520}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tupi", "src\Tupi\Tupi.csproj", "{5776E6DF-41A9-4A9A-AA56-0295F7722201}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tupi", "src\Tupi\Tupi.csproj", "{5776E6DF-41A9-4A9A-AA56-0295F7722201}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tupi.Tests", "test\Tupi.Tests\Tupi.Tests.csproj", "{191A65AF-E096-4169-99DC-C90388F8DAAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tupi.Tests", "test\Tupi.Tests\Tupi.Tests.csproj", "{191A65AF-E096-4169-99DC-C90388F8DAAC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoadingBooks", "benchmark\LoadingBooks\LoadingBooks.csproj", "{A771B0B6-3195-4308-9AC9-E02D1F6099F5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", "{2F775DF8-1808-4F68-A3FB-4F3A8453A6E4}"
 EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -25,6 +32,10 @@ Global
 		{191A65AF-E096-4169-99DC-C90388F8DAAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{191A65AF-E096-4169-99DC-C90388F8DAAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{191A65AF-E096-4169-99DC-C90388F8DAAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A771B0B6-3195-4308-9AC9-E02D1F6099F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A771B0B6-3195-4308-9AC9-E02D1F6099F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A771B0B6-3195-4308-9AC9-E02D1F6099F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A771B0B6-3195-4308-9AC9-E02D1F6099F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,8 +43,15 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{5776E6DF-41A9-4A9A-AA56-0295F7722201} = {7B36C062-8EF8-4ED1-9738-B8D2207ACFD9}
 		{191A65AF-E096-4169-99DC-C90388F8DAAC} = {2A180B09-128A-4A39-9819-D4DF5DF49520}
+		{A771B0B6-3195-4308-9AC9-E02D1F6099F5} = {2F775DF8-1808-4F68-A3FB-4F3A8453A6E4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {49D14A68-7FD7-447B-965A-AAE66D485153}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

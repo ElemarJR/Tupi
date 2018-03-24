@@ -42,7 +42,7 @@
                 {
                     source.Size -= 2;
                 }
-                else if (source.Buffer[source.Size - 2] != 's')
+                else if (source.Size >= 2 && source.Buffer[source.Size - 2] != 's')
                 {
                     source.Size -= 1;
                 }
@@ -114,7 +114,7 @@
 		   m() > 0. */
         public void PerformStep3(TokenSource source)
         {
-            if (source.Size == 0)
+            if (source.Size < 2)
                 return;
 
             switch (source.Buffer[source.Size - 2])
@@ -188,7 +188,7 @@
 
         public void PerformStep5(TokenSource source)
         {
-            if (source.Size == 0)
+            if (source.Size < 2)
                 return;
 
             switch (source.Buffer[source.Size - 2])

@@ -27,8 +27,7 @@ namespace Tupi.Indexing
                     var tokenSource = new TokenSource(reader);
 
                     var tokens = tokenSource
-                        .ReadAll(_analyzer.Process)
-                        .Distinct()
+                        .ReadAllDistinct(_analyzer.Process)
                         .ToArray();
 
                     foreach (var token in tokens)

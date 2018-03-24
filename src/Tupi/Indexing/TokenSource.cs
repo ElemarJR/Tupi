@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Tupi.Indexing.Filters;
 
 namespace Tupi.Indexing
 {
@@ -60,6 +61,33 @@ namespace Tupi.Indexing
                 if (filter(this))
                 {
                     yield return ToString();
+                }
+            }
+        }
+
+        public IEnumerable<string> ReadAllDistinct(Func<TokenSource, bool> filter)
+        {
+            var results = new HashSet<CharArraySegmentKey>();
+            while (Next())
+            {
+                if (filter(this))
+                {
+                    var term = new CharArraySegmentKey(
+                        Buffer,
+                        Size
+                        );
+
+                    if (!results.Contains(term))
+                    {
+                        var valueToReturn = ToString();
+
+                        results.Add(new CharArraySegmentKey(
+                            valueToReturn
+                            ));
+
+                        yield return valueToReturn;
+                    }
+                    
                 }
             }
         }

@@ -13,20 +13,20 @@ namespace Tupi.Indexing.Filters
             "their", "then", "there", "these", "they", "this", "to", "was", "will", "with"
         };
 
-        private readonly HashSet<ArraySegmentKey<char>> _stopWords
-            = new HashSet<ArraySegmentKey<char>>();
+        private readonly HashSet<CharArraySegmentKey> _stopWords
+            = new HashSet<CharArraySegmentKey>();
 
         public StopWordsFilter()
         {
             foreach (var word in DefaultStopWords)
             {
-                _stopWords.Add(new ArraySegmentKey<char>(word.ToCharArray()));
+                _stopWords.Add(new CharArraySegmentKey(word.ToCharArray()));
             }
         }
 
         public bool Process(TokenSource source)
         {
-            var term = new ArraySegmentKey<char>(source.Buffer, source.Size);
+            var term = new CharArraySegmentKey(source.Buffer, source.Size);
             return !_stopWords.Contains(term);
         }
     }

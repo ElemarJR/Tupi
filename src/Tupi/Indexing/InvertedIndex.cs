@@ -8,6 +8,9 @@ namespace Tupi.Indexing
         
         private readonly IDictionary<string, List<int>> _data = 
             new Dictionary<string, List<int>>();
+
+        public object NumberOfTerms => _data.Count;
+
         internal void Append(string term, int documentId)
         {
             if (_data.ContainsKey(term))
@@ -24,7 +27,5 @@ namespace Tupi.Indexing
         public IEnumerable<int> GetPostingsFor(string term) => !_data.ContainsKey(term) 
             ? Enumerable.Empty<int>() 
             : _data[term];
-
-        
     }
 }
