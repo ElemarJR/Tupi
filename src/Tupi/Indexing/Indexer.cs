@@ -3,11 +3,11 @@ using Tupi.Indexing.Filters;
 
 namespace Tupi.Indexing
 {
-    public class StringIndexer
+    public class Indexer
     {
         private readonly IAnalyzer _analyzer;
 
-        public StringIndexer(IAnalyzer analyzer = null)
+        public Indexer(IAnalyzer analyzer = null)
         {
             _analyzer = analyzer ?? DefaultAnalyzer.Instance;
         }
@@ -16,7 +16,7 @@ namespace Tupi.Indexing
             params string[] documents
         )
         {
-            var result = new InvertedIndex();
+            var result = new InvertedIndex(documents.Length);
 
             for (var i = 0; i < documents.Length; i++)
             {

@@ -37,7 +37,7 @@ namespace Tupi.Tests.Functional
             int[] expectedResults
         )
         {
-            var index = new StringIndexer().CreateIndex(documents);
+            var index = new Indexer().CreateIndex(documents);
             var searcher = new Searcher(index);
             var results = searcher.Search(term);
             Assert.Equal(expectedResults, results);
@@ -69,7 +69,7 @@ namespace Tupi.Tests.Functional
                     .ToArray();
             }
 
-            var index = new StringIndexer().CreateIndex(documents);
+            var index = new Indexer().CreateIndex(documents);
             var searcher = new Searcher(index);
             var results = searcher.Search(terms);
             Assert.Equal(expectedResults, results);
@@ -92,7 +92,7 @@ namespace Tupi.Tests.Functional
             int[] expectedResults
         )
         {
-            var index = new StringIndexer().CreateIndex(documents);
+            var index = new Indexer().CreateIndex(documents);
             var searcher = new Searcher(index);
             var results = searcher.Search(query, DefaultAnalyzer.Instance);
             Assert.Equal(expectedResults, results);

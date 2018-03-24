@@ -15,7 +15,7 @@ namespace Tupi.Tests.Unit
                 "One item is just one item. Two items are other two items"
             };
 
-            var index = new StringIndexer().CreateIndex(documents);
+            var index = new Indexer().CreateIndex(documents);
             var postings = index.GetPostingsFor("item");
             var positions = postings.SelectMany(p => p.Positions).ToArray();
             Assert.Equal(new long[] {2, 6, 8, 12}, positions);

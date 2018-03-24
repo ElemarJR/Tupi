@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using Tupi.Indexing.Filters;
 
 namespace Tupi.Indexing
@@ -170,6 +171,7 @@ namespace Tupi.Indexing
             return false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool IsConsonant(int index)
         {
             switch (Buffer[index])
@@ -177,6 +179,22 @@ namespace Tupi.Indexing
                 case 'a': case 'e': case 'i': case 'o': case 'u': return false;
                 case 'y': return (index == 0) || !IsConsonant(index - 1);
                 default: return true;
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool IsVowel(int index)
+        {
+            switch (Buffer[index])
+            {
+                case 'a':
+                case 'e':
+                case 'i':
+                case 'o':
+                case 'u':
+                    return true;
+                default:
+                    return false;
             }
         }
 

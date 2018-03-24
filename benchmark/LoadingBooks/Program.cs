@@ -14,19 +14,16 @@ namespace LoadingBooks
             var filename = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
                 + @"\t8.shakespeare.txt";
             var text1 = File.ReadAllText(filename);
-            var text2 = File.ReadAllText(filename);
-            var text3 = File.ReadAllText(filename);
+            var text2 = text1; //File.ReadAllText(filename);
+            var text3 = text1; //File.ReadAllText(filename);
 
             var beforeStartingGen0 = GC.CollectionCount(0);
             var beforeStartingGen1 = GC.CollectionCount(1);
             var beforeStartingGen2 = GC.CollectionCount(2);
 
-            Console.WriteLine($"Press any key to start indexing.");
-            Console.ReadLine();
-
             var sw = new Stopwatch();
             sw.Start();
-            var index = new StringIndexer(DefaultAnalyzer.Instance)
+            var index = new Indexer(DefaultAnalyzer.Instance)
                 .CreateIndex(text1, text2, text3);
             sw.Stop();
 
