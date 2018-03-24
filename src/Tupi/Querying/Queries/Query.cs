@@ -25,5 +25,10 @@ namespace Tupi.Querying.Queries
         public static Query Or(Query left, Query right) =>
             new AnyQuery(left, right);
 
+        public static Query Not(Query innerQuery) => 
+            new NotQuery(innerQuery);
+
+        public static Query Distance(string term1, string term2, int maxDistance) =>
+            new DistanceQuery(term1, term2, maxDistance);
     }
 }

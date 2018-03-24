@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Tupi.Indexing;
 
 namespace Tupi.Querying.Queries
@@ -15,7 +16,7 @@ namespace Tupi.Querying.Queries
         }
 
         public override IEnumerable<int> Execute(InvertedIndex index) 
-            => index.GetPostingsFor(_term);
+            => index.GetPostingsFor(_term).Select(posting => posting.DocumentId);
 
         public static Query From(string term) =>
             From(term, DefaultAnalyzer.Instance);

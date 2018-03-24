@@ -28,6 +28,6 @@ namespace Tupi.Querying.Queries
         }
 
         public static Query From(params string[] terms) =>
-            new AllQuery(terms.Select(TermQuery.From).ToList());
+            new AnyQuery(terms.Select(TermQuery.From).ToList());
     }
 }

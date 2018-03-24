@@ -12,6 +12,10 @@ namespace Tupi.Tests.Unit
             "This is a simple string.",
             new[] {"This", "is", "a", "simple", "string"}
         )]
+        [InlineData(
+            "Elemar's home.",
+            new[] { "Elemar's", "home" }
+        )]
         public void TokenizeStrings(string input, string[] expected)
         {
             using (var reader = new StringReader(input))

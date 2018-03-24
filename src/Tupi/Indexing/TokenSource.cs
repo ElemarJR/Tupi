@@ -16,6 +16,7 @@ namespace Tupi.Indexing
 
         public char[] Buffer { get; } = new char[256];
         public int Size { get; set; }
+        public long Position { get; private set; }
 
         public bool Next()
         {
@@ -25,10 +26,11 @@ namespace Tupi.Indexing
             {
                 var ch = (char)r;
 
-                if (ch == '\r' || ch == '\n' || char.IsWhiteSpace(ch) || char.IsPunctuation(ch))
+                if (ch == '\r' || ch == '\n' || char.IsWhiteSpace(ch) || (char.IsPunctuation(ch) && ch != '\''))
                 {
                     if (Size > 0)
                     {
+                        Position++;
                         return true;
                     }
                 }
@@ -38,6 +40,7 @@ namespace Tupi.Indexing
                 }
             }
 
+            Position++;
             return Size > 0;
         }
 

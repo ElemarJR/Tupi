@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics.SymbolStore;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 
 namespace Tupi.Indexing
 {
@@ -26,13 +23,12 @@ namespace Tupi.Indexing
                 {
                     var tokenSource = new TokenSource(reader);
 
-                    var tokens = tokenSource
-                        .ReadAllDistinct(_analyzer.Process)
-                        .ToArray();
-
-                    foreach (var token in tokens)
+                    while (tokenSource.Next())
                     {
-                        result.Append(token, i);
+                        if (_analyzer.Process(tokenSource))
+                        {
+                            result.Append(tokenSource.ToString(), i, tokenSource.Position);
+                        }
                     }
                 }
             }
