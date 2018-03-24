@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Tupi.Indexing.Filters;
 
 namespace Tupi.Indexing
 {
@@ -27,7 +28,10 @@ namespace Tupi.Indexing
                     {
                         if (_analyzer.Process(tokenSource))
                         {
-                            result.Append(tokenSource.ToString(), i, tokenSource.Position);
+
+                            result.Append(
+                                new CharArraySegmentKey(tokenSource.Buffer, tokenSource.Size), 
+                                i, tokenSource.Position);
                         }
                     }
                 }

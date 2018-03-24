@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Tupi.Indexing.Filters;
 
 namespace Tupi.Indexing
 {
@@ -10,38 +11,48 @@ namespace Tupi.Indexing
         public IEnumerable<int> IndexedDocuments => _indexedDocuments;
         public object NumberOfTerms => _data.Count;
 
-        private readonly IDictionary<string, List<Posting>> _data = 
-            new Dictionary<string, List<Posting>>();
+        private readonly IDictionary<CharArraySegmentKey, List<Posting>> _data = 
+            new Dictionary<CharArraySegmentKey, List<Posting>>();
 
-        internal void Append(string term, int documentId, long position)
+        internal void Append(CharArraySegmentKey term, int documentId, long position)
         {
-            if (_data.ContainsKey(term))
+            if (_data.TryGetValue(term, out var postings))
             {
-                var posting =
-                    _data[term].FirstOrDefault(p => p.DocumentId == documentId);
-
-                if (posting == null)
+                bool found = false;
+                foreach (var posting in postings)
                 {
-                    posting = new Posting(documentId);
-                    _data[term].Add(posting);
+                    if (posting.DocumentId == documentId)
+                    {
+                        found = true;
+                        posting.Positions.Add(position);
+                    }
                 }
-            
-                posting.Positions.Add(position);
+
+                if (!found)
+                {
+                    var posting = new Posting(documentId);
+                    postings.Add(posting);
+                }
+
             }
             else
             {
                 var posting = new Posting(documentId);
                 posting.Positions.Add(position);
-                var postings = new List<Posting> {posting};
-                _data.Add(term, postings);
+                postings = new List<Posting> {posting};
+                _data.Add(term.Stabilize(), postings);
             }
 
             _indexedDocuments.Add(documentId);
         }
 
-        public IEnumerable<Posting> GetPostingsFor(string term) => !_data.ContainsKey(term) 
-            ? Enumerable.Empty<Posting>() 
-            : _data[term];
+        public IEnumerable<Posting> GetPostingsFor(string term)
+        {
+            var key = new CharArraySegmentKey(term);
+            return !_data.ContainsKey(key)
+                ? Enumerable.Empty<Posting>()
+                : _data[key];
+        } 
     }
 
     public class Posting
@@ -56,7 +67,5 @@ namespace Tupi.Indexing
 
         public static implicit operator int(Posting entry) => 
             entry.DocumentId;
-
-       
     }
 }

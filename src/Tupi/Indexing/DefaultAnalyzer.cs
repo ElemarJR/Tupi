@@ -8,6 +8,8 @@ namespace Tupi.Indexing
 {
     public class DefaultAnalyzer : IAnalyzer
     {
+        private DefaultAnalyzer() { }
+
         private readonly IFilter[] _filters =
         {
             new ToLowerFilter(), 

@@ -26,7 +26,7 @@ namespace LoadingBooks
 
             var sw = new Stopwatch();
             sw.Start();
-            var index = new StringIndexer(new DefaultAnalyzer())
+            var index = new StringIndexer(DefaultAnalyzer.Instance)
                 .CreateIndex(text1, text2, text3);
             sw.Stop();
 

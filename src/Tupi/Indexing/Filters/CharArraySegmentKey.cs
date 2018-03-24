@@ -11,6 +11,7 @@ namespace Tupi.Indexing.Filters
         private readonly string _rawString;
         private readonly char[] _buffer;
         private readonly int _size;
+        private readonly int _hc;
 
         public CharArraySegmentKey(char[] buffer)
             : this(buffer, buffer.Length)
@@ -22,6 +23,17 @@ namespace Tupi.Indexing.Filters
         {
             _buffer = buffer;
             _size = size;
+
+            unchecked
+            {
+                _hc = _size;
+                for (var i = 0; i < _size; i++)
+                {
+                    var c = _buffer[i];
+                    _hc = (c | (c << 16)) * 397 ^ _hc;
+                }
+            }
+            
         }
 
         public CharArraySegmentKey(string buffer)
@@ -29,6 +41,16 @@ namespace Tupi.Indexing.Filters
         {
             _rawString = buffer;
             _size = _rawString.Length;
+
+            unchecked
+            {
+                _hc = _size;
+                for (var i = 0; i < _size; i++)
+                {
+                    var c = _rawString[i];
+                    _hc = (c | (c << 16)) * 397 ^ _hc;
+                }
+            }
         }
 
         
@@ -86,22 +108,7 @@ namespace Tupi.Indexing.Filters
             return obj is CharArraySegmentKey key && Equals(key);
         }
 
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                if (_buffer == null && _rawString == null)
-                    return -1;
-
-                var hc = _size;
-                for (var i = 0; i < _size; i++)
-                {
-                    var c = _rawString != null ? _rawString[i] : _buffer[i];
-                    hc = c.GetHashCode() * 397 ^ hc;
-                }
-                return hc;
-            }
-        }
+        public override int GetHashCode() => _hc;
 
         public override string ToString()
         {
@@ -113,5 +120,11 @@ namespace Tupi.Indexing.Filters
             
             return base.ToString();
         }
+
+        public bool IsStable => _rawString != null;
+
+        public CharArraySegmentKey Stabilize() => IsStable
+            ? this
+            : new CharArraySegmentKey(ToString());
     }
 }
