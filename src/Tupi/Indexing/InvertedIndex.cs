@@ -37,7 +37,7 @@ namespace Tupi.Indexing
                 var posting = new Posting(documentId);
                 posting.Positions.Add(position);
 
-                postings = new Posting[_maxDocumentId + 1];
+                postings = new Posting[_maxDocumentId];
                 postings[documentId] = posting;
                 _data.Add(term.Stabilize(), postings);
             }
@@ -50,7 +50,7 @@ namespace Tupi.Indexing
             var key = new CharArraySegmentKey(term);
             return !_data.ContainsKey(key)
                 ? Enumerable.Empty<Posting>()
-                : _data[key];
+                : _data[key].Where(posting => posting != null);
         } 
     }
 }

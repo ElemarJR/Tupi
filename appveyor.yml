@@ -1,0 +1,42 @@
+version: "0.0.1.{build}"
+pull_requests:
+  do_not_increment_build_number: true
+image: Visual Studio 2017
+
+environment:
+  COVERALLS_REPO_TOKEN:
+    secure: EctS6gS2pGhKJTBtP4xeSSuCOkCYwOSAObf/FI2u+ge2PVokxsgubRtgT/rJPQ5Yk
+install:
+  - git submodule update --init --recursive
+  - nuget restore Tupi.sln
+nuget:
+  disable_publish_on_pr: true
+
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+
+build_script:
+- ps: .\Build.ps1
+test: off
+artifacts:
+- path: .\src\Tupi\artifacts\**\*.nupkg
+  name: NuGet
+
+deploy:
+- provider: NuGet
+  server: https://www.myget.org/F/tupi/api/v2/package
+  api_key:
+    secure: iZUoXnTZY4wvq3PH7R9c8dkea0EzfwL/IkX4QA/5GbzR+t9nv0SFrmh6LlUKv0us
+  skip_symbols: true
+  on:
+    branch: master
+
+after_build:
+  - >
+      %userprofile%\.nuget\packages\coveralls.io\1.4.2\tools\coveralls.net.exe --opencover test/coverage.xml -r  %COVERALLS_REPO_TOKEN%

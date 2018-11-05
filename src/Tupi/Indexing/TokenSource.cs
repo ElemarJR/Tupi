@@ -262,8 +262,6 @@ namespace Tupi.Indexing
             return true;
         }
         public char LastChar => Buffer[Size - 1];
-
-
     }
 }
 
