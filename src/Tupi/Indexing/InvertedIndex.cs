@@ -53,18 +53,4 @@ namespace Tupi.Indexing
                 : _data[key];
         } 
     }
-
-    public class Posting
-    {
-        public int DocumentId { get; }
-        public IList<long> Positions { get; } = new List<long>(); 
-
-        public Posting(int documentId)
-        {
-            DocumentId = documentId;
-        }
-
-        public static implicit operator int(Posting entry) => 
-            entry.DocumentId;
-    }
 }

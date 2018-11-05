@@ -13,6 +13,23 @@ namespace Tupi.Indexing
         }
 
         public InvertedIndex CreateIndex(
+            params Stream[] documents
+        )
+        {
+            var result = new InvertedIndex(documents.Length);
+
+            for (var i = 0; i < documents.Length; i++)
+            {
+                using (var reader = new StreamReader(documents[i]))
+                {
+                    ProcessDocument(result, i, reader);
+                }
+            }
+
+            return result;
+        }
+
+        public InvertedIndex CreateIndex(
             params string[] documents
         )
         {
@@ -22,22 +39,31 @@ namespace Tupi.Indexing
             {
                 using (var reader = new StringReader(documents[i]))
                 {
-                    var tokenSource = new TokenSource(reader);
-
-                    while (tokenSource.Next())
-                    {
-                        if (_analyzer.Process(tokenSource))
-                        {
-
-                            result.Append(
-                                new CharArraySegmentKey(tokenSource.Buffer, tokenSource.Size), 
-                                i, tokenSource.Position);
-                        }
-                    }
+                    ProcessDocument(result, i, reader);
                 }
             }
 
             return result;
+        }
+
+        private void ProcessDocument(
+            InvertedIndex result, 
+            int documentIndex, 
+            TextReader reader
+            )
+        {
+            var tokenSource = new TokenSource(reader);
+
+            while (tokenSource.Next())
+            {
+                if (_analyzer.Process(tokenSource))
+                {
+
+                    result.Append(
+                        new CharArraySegmentKey(tokenSource.Buffer, tokenSource.Size),
+                        documentIndex, tokenSource.Position);
+                }
+            }
         }
     }
 }
