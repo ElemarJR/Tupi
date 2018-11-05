@@ -5,7 +5,7 @@ image: Visual Studio 2017
 
 environment:
   COVERALLS_REPO_TOKEN:
-    secure: EctS6gS2pGhKJTBtP4xeSSuCOkCYwOSAObf/FI2u+ge2PVokxsgubRtgT/rJPQ5Yk
+    secure: ctS6gS2pGhKJTBtP4xeSSuCOkCYwOSAObf/FI2u+ge2PVokxsgubRtgT/rJPQ5Yk
 install:
   - git submodule update --init --recursive
   - nuget restore Tupi.sln
@@ -39,4 +39,4 @@ deploy:
 
 after_build:
   - >
-      %userprofile%\.nuget\packages\coveralls.io\1.4.2\tools\coveralls.net.exe --opencover test/coverage.xml -r  %COVERALLS_REPO_TOKEN%
+      %userprofile%\.nuget\packages\coveralls.io\1.4.2\tools\coveralls.net.exe --opencover test/coverage.xml -r %COVERALLS_REPO_TOKEN%
