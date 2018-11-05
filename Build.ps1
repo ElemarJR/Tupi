@@ -39,7 +39,7 @@ echo "build: Build version suffix is $buildSuffix"
 
 exec { & dotnet build Tupi.sln -c Release --version-suffix=$buildSuffix }
 
-exec { & $opencover -target:"c:\program files\dotnet\dotnet.exe" -targetargs:"test .\test\Tupi.Tests\Tupi.Tests.csproj --configuration Debug" -filter:"+[*]* -[*.Tests*]*" -returntargetcode:0 -register:user -oldStyle -output:".\coverage.xml"}
+exec { & $opencover -target:"c:\program files\dotnet\dotnet.exe" -targetargs:"test .\test\Tupi.Tests\Tupi.Tests.csproj --configuration Debug" -filter:"+[*]* -[*.Tests*]*" -returntargetcode:0 -register:user -oldStyle -output:".\test\coverage.xml"}
 
 exec { & dotnet pack .\src\Tupi\Tupi.csproj -c Release -o .\artifacts --include-symbols --no-build $versionSuffix }
 
